@@ -1,21 +1,17 @@
 package models.forms
 
+  import play.api.data.Form
+  import play.api.data.Forms._
 
-case class UserForm(
+case class UserFormData(
   name: Option[String],
   age: Option[Int]
 )
 
-object UserForm {
-
-  import play.api.data.Form
-  import play.api.data.Forms._
-
-  val form: Form[UserForm] = Form(
-    mapping(
-      "name" -> optional(nonEmptyText),
-      "age" -> optional(number(min = 0))
-    )(UserForm.apply)(UserForm.unapply)
-  )
-
-}
+object UserForm extends Form[UserFormData](
+  mapping(
+    "name" -> optional(nonEmptyText),
+    "age" -> optional(number(min = 0))
+  )(UserFormData.apply)(UserFormData.unapply)
+  , Map.empty, Nil, None
+)

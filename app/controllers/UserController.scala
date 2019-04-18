@@ -8,7 +8,7 @@ import play.api.i18n.I18nSupport // hasErrors.errorsAsJson　で利用
 import play.api.libs.json.{Json, JsValue}
 
 import models.User
-import models.forms.UserForm
+import models.forms.{UserFormData, UserForm}
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -19,12 +19,12 @@ class UserController @Inject()(cc: ControllerComponents)
   extends AbstractController(cc) with play.api.i18n.I18nSupport {
 
   def search() = Action { implicit request: Request[AnyContent] =>
-    def searchFromExample(form: UserForm): Seq[User] = {
-      val filterName: User => Boolean = (form.name: Option[String]) match {
+    def searchFromExample(formData: UserFormData): Seq[User] = {
+      val filterName: User => Boolean = (formData.name: Option[String]) match {
         case Some(name) => { user: User => user.name == name }
         case None => { _ => true }
       }
-      val filterAge: User => Boolean = (form.age: Option[Int]) match {
+      val filterAge: User => Boolean = (formData.age: Option[Int]) match {
         case Some(age) => { user: User => user.age == age }
         case None => { _ => true }
       }
@@ -34,7 +34,7 @@ class UserController @Inject()(cc: ControllerComponents)
       users
     }
 
-    UserForm.form.bindFromRequest().fold(
+    UserForm.bindFromRequest().fold(
       badForm => {
         BadRequest(badForm.errorsAsJson)
       },
