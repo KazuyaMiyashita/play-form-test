@@ -16,7 +16,7 @@ import models.forms.UserForm
  */
 @Singleton
 class UserController @Inject()(cc: ControllerComponents)
-  extends AbstractController(cc) with play.api.i18n.I18nSupport {
+  extends AbstractController(cc) with I18nSupport {
 
   def search() = Action { implicit request: Request[AnyContent] =>
     def searchFromExample(form: UserForm): Seq[User] = {
