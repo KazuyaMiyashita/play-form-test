@@ -6,6 +6,8 @@ case class User(name: String, age: Int)
 
 object User {
 
+  // ジェネレーターで作成。
+  // cf. すごい名前生成器: https://namegen.jp
   val findAll: Seq[User] = Seq(
     User("川中 豊", 25),
     User("坂元 佑", 42),
